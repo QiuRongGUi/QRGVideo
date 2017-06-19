@@ -1,0 +1,6 @@
+platform :ios,'7.0'
+
+target 'WH -- Demo5' do
+
+    pod 'SDWebImage', '~> 3.7.0'
+end
