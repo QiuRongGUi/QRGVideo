@@ -19,6 +19,7 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
 @property (nonatomic, strong) UIView *topBar;
 @property (nonatomic, strong) UIView *bottomBar;
 @property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIButton *pauseButton;
 @property (nonatomic, strong) UIButton *fullScreenButton;
 @property (nonatomic, strong) UIButton *shrinkScreenButton;
@@ -26,7 +27,7 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, assign) BOOL isBarShowing;
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
-
+@property (nonatomic, strong) UIButton *backButton;
 @end
 @implementation KrVideoPlayerControlView
 
@@ -40,8 +41,9 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
         
         [self addSubview:self.topBar];
         
-//        [self.topBar addSubview:self.closeButton];
-        
+        [self.topBar addSubview:self.closeButton];
+        [self.topBar addSubview:self.backButton];
+
         [self addSubview:self.bottomBar];
         [self.bottomBar addSubview:self.playButton];
         [self.bottomBar addSubview:self.pauseButton];
@@ -65,7 +67,10 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
 {
     [super layoutSubviews];
     self.topBar.frame = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds), CGRectGetWidth(self.bounds), kVideoControlBarHeight);
-//    self.closeButton.frame = CGRectMake(CGRectGetWidth(self.topBar.bounds) - CGRectGetWidth(self.closeButton.bounds), CGRectGetMinX(self.topBar.bounds), CGRectGetWidth(self.closeButton.bounds), CGRectGetHeight(self.closeButton.bounds));
+    
+    self.backButton.frame = CGRectMake(0, 0,kVideoControlBarHeight,kVideoControlBarHeight);
+    
+    self.closeButton.frame = CGRectMake(CGRectGetWidth(self.topBar.bounds) - CGRectGetWidth(self.closeButton.bounds), CGRectGetMinX(self.topBar.bounds), CGRectGetWidth(self.closeButton.bounds), CGRectGetHeight(self.closeButton.bounds));
     self.bottomBar.frame = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetHeight(self.bounds) - kVideoControlBarHeight, CGRectGetWidth(self.bounds), kVideoControlBarHeight);
     self.playButton.frame = CGRectMake(CGRectGetMinX(self.bottomBar.bounds), CGRectGetHeight(self.bottomBar.bounds)/2 - CGRectGetHeight(self.playButton.bounds)/2, CGRectGetWidth(self.playButton.bounds), CGRectGetHeight(self.playButton.bounds));
     self.pauseButton.frame = self.playButton.frame;
@@ -130,11 +135,15 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(animateHide) object:nil];
 }
 
+/**
+ 点击视频界面的点击事件
+
+ @param gesture <#gesture description#>
+ */
 - (void)onTap:(UITapGestureRecognizer *)gesture
 {
     
     NSLog(@"---- askl==");
-    
     if (gesture.state == UIGestureRecognizerStateRecognized) {
         if (self.isBarShowing) {
             [self animateHide];
@@ -219,18 +228,18 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
     return _progressSlider;
 }
 
-//- (UIButton *)closeButton
-//{
-//    if (!_closeButton) {
-//        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        _closeButton.backgroundColor = [UIColor yellowColor];
-//
-//        [_closeButton setImage:[UIImage imageNamed:@"kr-video-player-close"] forState:UIControlStateNormal];
-//        _closeButton.bounds = CGRectMake(0, 0, kVideoControlBarHeight, kVideoControlBarHeight);
-//    }
-//    return _closeButton;
-//}
-//
+- (UIButton *)closeButton
+{
+    if (!_closeButton) {
+        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _closeButton.backgroundColor = [UIColor yellowColor];
+
+        [_closeButton setImage:[UIImage imageNamed:@"kr-video-player-close"] forState:UIControlStateNormal];
+        _closeButton.bounds = CGRectMake(0, 0, kVideoControlBarHeight, kVideoControlBarHeight);
+    }
+    return _closeButton;
+}
+
 - (UILabel *)timeLabel
 {
     if (!_timeLabel) {
@@ -258,11 +267,20 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeinterval = 5.0;
         _playStateBut = [UIButton buttonWithType:UIButtonTypeCustom];
         [_playStateBut setImage:[UIImage imageNamed:@"kr-video-player-pause"] forState:UIControlStateNormal];
         [_playStateBut setImage:[UIImage imageNamed:@"播放"] forState:UIControlStateSelected];
-//        _playStateBut.backgroundColor = [UIColor orangeColor];
         _playStateBut.imageView.contentMode = UIViewContentModeCenter;
-//        [_playButton addTarget:self action:@selector(clikePlayState:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _playStateBut;
+}
+
+- (UIButton *)backButton{
+    if(!_backButton){
+        _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backButton.backgroundColor = [UIColor redColor];
+        [_backButton setImage:[UIImage imageNamed:@"nav_white_back"] forState:UIControlStateNormal];
+        _backButton.bounds = CGRectMake(0, 0, kVideoControlTimeLabelFontSize, kVideoControlTimeLabelFontSize);
+        
+    }
+    return _backButton;
 }
 
 @end

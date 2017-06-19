@@ -105,8 +105,9 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
 
 - (void)configControlAction
 {
+    [self.videoControl.backButton addTarget:self action:@selector(clikeBack:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.videoControl.playStateBut addTarget:self action:@selector(clikePlayState:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.videoControl.playButton addTarget:self action:@selector(playButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.videoControl.pauseButton addTarget:self action:@selector(pauseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.videoControl.closeButton addTarget:self action:@selector(closeButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -118,6 +119,13 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
     [self.videoControl.progressSlider addTarget:self action:@selector(progressSliderTouchEnded:) forControlEvents:UIControlEventTouchUpOutside];
     [self setProgressSliderMaxMinValues];
     [self monitorVideoPlayback];
+}
+- (void)clikeBack:(UIButton *)sends{
+    
+    
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"VideoBack" object:self userInfo:nil];
+
 }
 - (void)clikePlayState:(UIButton *)sends{
 

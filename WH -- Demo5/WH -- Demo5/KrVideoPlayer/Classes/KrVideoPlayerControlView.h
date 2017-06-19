@@ -23,6 +23,7 @@
 @property (nonatomic, strong, readonly) UIButton *closeButton;
 @property (nonatomic, strong, readonly) UILabel *timeLabel;
 @property (nonatomic, strong, readonly) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, strong, readonly) UIButton *backButton;
 
 - (void)animateHide;
 - (void)animateShow;

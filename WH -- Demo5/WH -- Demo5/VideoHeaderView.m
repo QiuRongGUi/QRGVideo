@@ -8,11 +8,9 @@
 
 #import "VideoHeaderView.h"
 
-#import "KrVideoPlayerController.h"
 
 @interface VideoHeaderView()
 
-@property(nonatomic,strong) KrVideoPlayerController *videoController;
 
 @end
 
@@ -42,8 +40,8 @@
         [self.videoController setWillChangeToFullscreenMode:^{
                     [weakSelf toolbarHidden:YES];
         }];
-        [self addSubview:self.videoController.view];
-        //    [self.videoController showInWindow];
+//        [self addSubview:self.videoController.view];
+        [self.videoController showInWindow];
         
         self.videoController.contentURL = url;
         

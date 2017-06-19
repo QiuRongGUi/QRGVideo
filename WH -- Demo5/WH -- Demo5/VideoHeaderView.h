@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KrVideoPlayerController.h"
 
 @protocol VideoHeaderViewDelegate <NSObject>
 
@@ -15,6 +16,7 @@
 @end
 
 @interface VideoHeaderView : UIView
+@property(nonatomic,strong) KrVideoPlayerController *videoController;
 
 @property(nonatomic,assign) id<VideoHeaderViewDelegate> deleagte;
 
