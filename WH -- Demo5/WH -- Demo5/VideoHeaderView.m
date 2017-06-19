@@ -40,8 +40,8 @@
         [self.videoController setWillChangeToFullscreenMode:^{
                     [weakSelf toolbarHidden:YES];
         }];
-//        [self addSubview:self.videoController.view];
-        [self.videoController showInWindow];
+//        [self addSubview:self.videoController.view];  加载到当前 view 上使用简单
+        [self.videoController showInWindow]; //video 显示在 window 便于控制
         
         self.videoController.contentURL = url;
         

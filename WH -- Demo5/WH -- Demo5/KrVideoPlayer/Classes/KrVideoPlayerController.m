@@ -122,8 +122,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
 }
 - (void)clikeBack:(UIButton *)sends{
     
-    
-    
     [[NSNotificationCenter defaultCenter]postNotificationName:@"VideoBack" object:self userInfo:nil];
 
 }
@@ -131,22 +129,29 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
 
     if(sends.selected){
         [self play];
+        self.videoControl.playStateBut.selected = NO;
     }else{
         [self pause];
+        self.videoControl.playStateBut.selected = YES;
     }
-
-    sends.selected = !sends.selected;
+    
 
 }
 - (void)onMPMoviePlayerPlaybackStateDidChangeNotification
 {
     if (self.playbackState == MPMoviePlaybackStatePlaying) {
+        
+        NSLog(@"0---");
+        self.videoControl.playStateBut.selected = NO;
         self.videoControl.pauseButton.hidden = NO;
         self.videoControl.playButton.hidden = YES;
         [self startDurationTimer];
         [self.videoControl.indicatorView stopAnimating];
         [self.videoControl autoFadeOutControlBar];
     } else {
+        NSLog(@"1---");
+        self.videoControl.playStateBut.selected = YES;
+        
         self.videoControl.pauseButton.hidden = YES;
         self.videoControl.playButton.hidden = NO;
         [self stopDurationTimer];
@@ -178,6 +183,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
     [self play];
     self.videoControl.playButton.hidden = YES;
     self.videoControl.pauseButton.hidden = NO;
+
 }
 
 - (void)pauseButtonClick
@@ -185,6 +191,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeinterval = 0.3f;
     [self pause];
     self.videoControl.playButton.hidden = NO;
     self.videoControl.pauseButton.hidden = YES;
+
 }
 
 - (void)closeButtonClick
